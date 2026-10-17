@@ -49,8 +49,8 @@ Close PowerShell and open a new one after installing anything.
 ### 2. Clone the repository
 
 ```
-git clone https://github.com/Aulrich-tech/AulandLyBooks.git
-cd AulandLyBooks
+git clone https://github.com/Aulrich-tech/cit3102-m5-book.git
+cd cit3102-m5-book
 ```
 
 ### 3. Install the dependencies
@@ -86,19 +86,16 @@ cit3102-m5-book
 ## Setup
 
 ```bash
-git clone https://github.com/Aulrich-Tech/AulandLyBooks.git
-cd AulandLyBooks
+git clone https://github.com/Aulrich-Tech/cit3102-m5-book.git
+cd cit3102-m5-book
 composer install
 copy .env.example .env
 php artisan key:generate
-# create an empty file: database/database.sqlite
 php artisan migrate
 php artisan serve
 ```
 php artisan migrate
 ```
-
-The `.env` file uses `DB_CONNECTION=sqlite`, so leave it as it is. If it asks "The database does not exist. Would you like to create it?", type `yes`. Laravel creates `database/database.sqlite` for you.
 
 ### 7. Start the server
 
