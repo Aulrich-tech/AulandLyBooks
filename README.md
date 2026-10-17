@@ -49,8 +49,8 @@ Close PowerShell and open a new one after installing anything.
 ### 2. Clone the repository
 
 ```
-git clone https://github.com/Aulrich-Tech/cit3102-m5-book.git
-cd cit3102-m5-book
+git clone https://github.com/Aulrich-Tech/AulandLyBooks.git
+cd AulandLyBooks
 ```
 
 ### 3. Install the dependencies
@@ -157,4 +157,4 @@ Use Bruno (https://www.usebruno.com/downloads) or any API client:
 
 ## Why does DELETE return 204 and not 200?
 
-A short section, three to five sentences in your own words, answering: why does DELETE return 204 and not 200?
+DELETE returns 204 because the request worked and there is nothing left to send back. The book is already gone after the delete, so there is no record to show in the response. A 200 response is for requests that come back with something to read, like the book data in a GET or PUT. The 204 status tells the client that the delete succeeded and that it does not need to look for a response body.
