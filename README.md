@@ -1,58 +1,160 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# cit3102-m5-book
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Course:** CIT_3102, Midterms Activity 2 (Build Your Own API)
 
-## About Laravel
+**Partners:** Aulrich Espiritu and Lyra Embalsado
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Section:** IT3E
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Resource:** Book
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This is a REST API for managing books, built with Laravel and Laravel Sanctum. Every book route needs a token, and users get a token by registering or logging in.
 
-## Learning Laravel
+The Book resource has these fields:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Field | Type |
+|---|---|
+| title | string |
+| author | string |
+| genre | string |
+| pages | integer |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Setup
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+These steps run the project from a fresh clone on Windows. The project uses SQLite, so MySQL is not needed.
 
-## Agentic Development
+### 1. Check the tools you need
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Open PowerShell and run each of these. Each one should print a version number:
 
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+git --version
+php -v
+composer -V
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+- Git can be installed from https://git-scm.com/download/win
+- PHP must be **8.4 or higher**. The project's packages (Laravel 13, Symfony 8, Pest 5) do not install on PHP 8.2 or 8.3.
+- Composer needs PHP, so install PHP first. Laravel Herd (https://herd.laravel.com/windows) gives you PHP and Composer in one installer. Laragon also works.
 
-## Contributing
+If you installed PHP 8.4 but `php -v` still shows an older version, an older PHP (for example the one from XAMPP) is listed first in your PATH. Run `where.exe php` to see the order. To use the new one in the current window only, put its folder first:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+$env:Path = "C:\path\to\php-folder;" + $env:Path
+php -v
+```
 
-## Code of Conduct
+Close PowerShell and open a new one after installing anything.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 2. Clone the repository
 
-## Security Vulnerabilities
+```
+git clone https://github.com/Aulrich-tech/cit3102-m5-book.git
+cd cit3102-m5-book
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Install the dependencies
 
-## License
+```
+composer install
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This takes a few minutes and creates the `vendor` folder. If it stops with "Your lock file does not contain a compatible set of packages", your PHP is older than 8.4. Go back to step 1.
+
+### 4. Create the environment file
+
+```
+copy .env.example .env
+```
+
+On Mac or Linux, use `cp .env.example .env` instead.
+
+### 5. Generate the app key
+
+```
+php artisan key:generate
+```
+
+### 6. Create the database tables
+
+```
+php artisan migrate
+```
+
+The `.env` file uses `DB_CONNECTION=sqlite`, so leave it as it is. If it asks "The database does not exist. Would you like to create it?", type `yes`. Laravel creates `database/database.sqlite` for you.
+
+### 7. Start the server
+
+```
+php artisan serve
+```
+
+Keep this window open, because closing it stops the server. The API runs at `http://127.0.0.1:8000`.
+
+### 8. Test the API
+
+Use Bruno (https://www.usebruno.com/downloads) or any API client:
+
+1. Add the header `Accept: application/json` to every request, so errors come back as JSON.
+2. Send `POST /api/register` or `POST /api/login` and copy the `token` from the response.
+3. For all the other routes, set the Bearer Token to that token.
+
+## Routes
+
+| Verb | Path | What it does | Needs token |
+|---|---|---|---|
+| POST | /api/register | Creates a new user and returns a token | No |
+| POST | /api/login | Logs in a user and returns a token | No |
+| POST | /api/logout | Deletes the current token | Yes |
+| GET | /api/me | Shows the logged-in user | Yes |
+| GET | /api/books | Lists all books, with optional filters ?genre= and ?author= | Yes |
+| POST | /api/books | Creates a new book | Yes |
+| GET | /api/books/{book} | Shows one book | Yes |
+| PUT | /api/books/{book} | Updates one book | Yes |
+| DELETE | /api/books/{book} | Deletes one book | Yes |
+
+## Screenshots
+
+### 1. POST /api/register returns 201
+
+![1 Register](screenshots/01-register.png)
+
+### 2. POST /api/login returns 200
+
+![2 Login](screenshots/02-login.png)
+
+### 3. GET /api/books with no token returns 401
+
+![3 No token](screenshots/03-no-token.png)
+
+### 4. GET /api/books with the token returns 200
+
+![4 Index with token](screenshots/04-index.png)
+
+### 5. POST /api/books with valid data returns 201
+
+![5 Create book](screenshots/05-store.png)
+
+### 6. POST /api/books with a required field missing returns 422
+
+![6 Validation error](screenshots/06-validation.png)
+
+### 7. GET /api/books/1 returns 200
+
+![7 Show book](screenshots/07-show.png)
+
+### 8. GET /api/books/99999 returns 404
+
+![8 Not found](screenshots/08-not-found.png)
+
+### 9. PUT /api/books/1 with changed data returns 200
+
+![9 Update book](screenshots/09-update.png)
+
+### 10. DELETE /api/books/1 returns 204
+
+![10 Delete book](screenshots/10-delete.png)
+
+## Why does DELETE return 204 and not 200?
+
+DELETE returns 204 because the request worked and there is nothing left to send back. The book is already gone after the delete, so there is no record to show in the response. A 200 response is for requests that come back with something to read, like the book data in a GET or PUT. The 204 No Content status tells the client that the delete succeeded and that it does not need to look for a response body.
