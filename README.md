@@ -1,6 +1,6 @@
-# AulandLyBooks
+cit3102-m5-book
 
-**Partners:** Your Name and Her Name
+**Partners:** Aulrich Espiritu and Lyra Embalsado
 **Section:** IT3E
 **Resource:** Book (title, author, genre, pages)
 
