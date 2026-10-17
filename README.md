@@ -49,8 +49,8 @@ Close PowerShell and open a new one after installing anything.
 ### 2. Clone the repository
 
 ```
-git clone https://github.com/Aulrich-tech/cit3102-m5-book.git
-cd cit3102-m5-book
+git clone https://github.com/Aulrich-tech/AulandLyBooks.git
+cd AulandLyBooks
 ```
 
 ### 3. Install the dependencies
