@@ -131,7 +131,7 @@ Use Bruno (https://www.usebruno.com/downloads) or any API client:
 
 ### 1. POST /api/register returns 201
 
-![1 Register](cit3102-m5-book/screenshots/01-register.png)
+![1 Register](screenshots/01-register.png)
 
 ### 2. POST /api/login returns 200
 
