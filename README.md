@@ -77,6 +77,23 @@ php artisan key:generate
 
 ### 6. Create the database tables
 
+cit3102-m5-book
+
+**Partners:** Aulrich Espiritu and Lyra Embalsado
+**Section:** IT3E
+**Resource:** Book (title, author, genre, pages)
+
+## Setup
+
+```bash
+git clone https://github.com/Aulrich-Tech/AulandLyBooks.git
+cd AulandLyBooks
+composer install
+copy .env.example .env
+php artisan key:generate
+# create an empty file: database/database.sqlite
+php artisan migrate
+php artisan serve
 ```
 php artisan migrate
 ```
@@ -158,3 +175,30 @@ Use Bruno (https://www.usebruno.com/downloads) or any API client:
 ## Why does DELETE return 204 and not 200?
 
 DELETE returns 204 because the request worked and there is nothing left to send back. The book is already gone after the delete, so there is no record to show in the response. A 200 response is for requests that come back with something to read, like the book data in a GET or PUT. The 204 No Content status tells the client that the delete succeeded and that it does not need to look for a response body.
+## Routes
+
+| Verb | Path | What it does | Token needed? |
+|---|---|---|---|
+| POST | /api/register | Creates a user and returns a token | No |
+| POST | /api/login | Logs in and returns a token | No |
+| POST | /api/logout | Deletes the current token | Yes |
+| GET | /api/me | Shows the logged-in user | Yes |
+| GET | /api/books | Lists books (filter with ?genre= and ?author=) | Yes |
+| POST | /api/books | Creates a book | Yes |
+| GET | /api/books/{book} | Shows one book | Yes |
+| PUT | /api/books/{book} | Updates a book | Yes |
+| DELETE | /api/books/{book} | Deletes a book | Yes |
+
+## Screenshots
+
+1. Register (201)
+![1 Register](screenshots/01-register.png)
+
+2. Login (200)
+![2 Login](screenshots/02-login.png)
+
+(continue the same way for 3 to 10)
+
+## Why does DELETE return 204 and not 200?
+
+(Write 3 to 5 sentences here in your own words.)
